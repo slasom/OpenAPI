@@ -104,7 +104,7 @@ components:
       properties:
         id:
           type: string
-          example: 'slasom'
+          example: '01446D458'
         preferences:
           type: string
           example: 'Football, music and action films.'
