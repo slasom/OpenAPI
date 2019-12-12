@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: Emergency Alerts
+  title: Emergencies
   description: This application notifies users about an emergency within a geographical area, you can also obtain users information and its location within an area to plan possible evacuations or other uses
   version: '1.0'
   termsOfService: 'https://emergency.spilab.es/terms'
