@@ -1,0 +1,225 @@
+openapi: 3.0.2
+info:
+  contact:
+    email: info@spilab.es
+    name: Spilab
+    url: https://spilab.es
+  description: This application allows users to send and receive information about
+    a user's health condition.
+  termsOfService: https://events.spilab.es/terms
+  title: Health Alerts
+  version: "1.0"
+servers:
+- url: /
+paths:
+  /event:
+    post:
+      description: Sends an event
+      operationId: postEvent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+        description: Information about the event
+        required: true
+      responses:
+        201:
+          content:
+            text/plain:
+              schema:
+                example: Post Correctly
+                title: Succesful response
+                type: string
+          description: Succesful response
+        404:
+          content:
+            text/plain:
+              schema:
+                example: Not found
+                title: Endpoint not found
+                type: string
+          description: Not found response
+      summary: Sends an event
+      tags:
+      - Event
+      x-swagger-router-controller: Event
+  /user:
+    get:
+      description: Obtain user general information
+      operationId: getUser
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: Successful response
+        404:
+          content:
+            text/plain:
+              schema:
+                example: Not found
+                title: Endpoint not found
+                type: string
+          description: Not found response
+      summary: Gets user information
+      tags:
+      - Status
+      x-swagger-router-controller: Status
+  /temperature:
+    get:
+      description: Obtain current environment temperature
+      operationId: getTemperature
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: radius
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+      responses:
+        200:
+          content:
+            text/plain:
+              schema:
+                example: 36.5
+                format: double
+                title: Endpoint not found
+                type: number
+          description: Successful response
+        404:
+          content:
+            text/plain:
+              schema:
+                example: Not found
+                title: Endpoint not found
+                type: string
+          description: Not found response
+      summary: Gets the environment temperature
+      tags:
+      - Status
+      x-swagger-router-controller: Status
+  /bodyTemperature:
+    get:
+      description: Obtain current user temperature
+      operationId: getBodyTemperature
+      responses:
+        200:
+          content:
+            text/plain:
+              schema:
+                example: 36.5
+                format: double
+                title: Endpoint not found
+                type: number
+          description: Successful response
+        404:
+          content:
+            text/plain:
+              schema:
+                example: Not found
+                title: Endpoint not found
+                type: string
+          description: Not found response
+      summary: Gets the user temperature
+      tags:
+      - Status
+      x-swagger-router-controller: Status
+components:
+  responses:
+    404:
+      content:
+        text/plain:
+          schema:
+            example: Not found
+            title: Endpoint not found
+            type: string
+      description: Not found response
+    200:
+      content:
+        text/plain:
+          schema:
+            example: Post Correctly
+            title: Succesful response
+            type: string
+      description: Succesful response
+    201:
+      content:
+        text/plain:
+          schema:
+            example: Post Correctly
+            title: Succesful response
+            type: string
+      description: Succesful response
+  schemas:
+    Event:
+      example:
+        description: I have fallen.
+        location:
+          latitude: 39.47903
+          radius: 20
+          longitude: -6.342139
+        id: 1
+        title: Need help!
+      properties:
+        id:
+          example: 1
+          format: int64
+          type: integer
+        title:
+          example: Need help!
+          type: string
+        description:
+          example: I have fallen.
+          type: string
+        location:
+          $ref: '#/components/schemas/Location'
+      required:
+      - description
+      - id
+      - latitude
+      - longitude
+      - radius
+      - title
+    Location:
+      example:
+        latitude: 39.47903
+        radius: 20
+        longitude: -6.342139
+      properties:
+        latitude:
+          example: 39.47903
+          format: double
+          type: number
+        longitude:
+          example: -6.342139
+          format: double
+          type: number
+        radius:
+          example: 20
+          format: double
+          type: number
+    User:
+      example:
+        details: 84 years old. Male. Lives alone.
+        id: 05461A54
+      properties:
+        id:
+          example: 05461A54
+          type: string
+        details:
+          example: 84 years old. Male. Lives alone.
+          type: string
