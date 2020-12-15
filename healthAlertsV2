@@ -48,6 +48,25 @@ paths:
     get:
       description: Obtain user general information
       operationId: getUser
+      parameters:
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
+        - name: radius
+          in: query
+          required: true
+          schema:
+            type: number
+            format: double
       responses:
         200:
           content:
