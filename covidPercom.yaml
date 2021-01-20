@@ -1,0 +1,127 @@
+openapi: 3.0.2
+info:
+  title: Covid19 PERCOM
+  description: >-
+    This api provides us with the set of positions and frequencies of the different connected devices to generate a heat map.
+  version: '3.0'
+  termsOfService: 'http://spilab.es/'
+  contact:
+    name: Heatmap 
+    url: 'http://spilab.es/'
+    email: spilab.uex@gmail.com
+tags:
+  - name: Map
+paths:
+  /heatmaps:
+    get:
+      tags:
+        - Map
+      summary: Get the locations frequency processed in the different connected devices.
+      operationId: getHeatmaps
+      parameters:
+        - name: beginDate
+          in: query
+          description: init date
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: '2019-07-21T17:32:28Z'
+        - name: endDate
+          in: query
+          description: end date
+          required: true
+          schema:
+            type: string
+            format: date-time
+            example: '2019-07-21T17:32:28Z'
+        - name: xmin
+          in: query
+          description: xmin
+          required: true
+          schema:
+            type: number
+            format: double
+            example: 38.48492
+        - name: xmax
+          in: query
+          description: xmax
+          required: true
+          schema:
+            type: number
+            format: double
+            example: -6.2548987
+        - name: ymin
+          in: query
+          description: ymin
+          required: true
+          schema:
+            type: number
+            format: double
+            example: 38.48492
+        - name: ymax
+          in: query
+          description: ymax
+          required: true
+          schema:
+            type: number
+            format: double
+            example: -6.2548987
+      responses:
+        '200':
+          $ref: '#/components/responses/200'
+        '204':
+          $ref: '#/components/responses/204'
+        '404':
+          $ref: '#/components/responses/404'
+ 
+components:
+  schemas:
+    LocationsFrequency:
+      type: array
+      items:
+        $ref: '#/components/schemas/LocationFrequency'
+    LocationFrequency:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          example: 38.48492
+        longitude:
+          type: number
+          format: double
+          example: -6.2548987
+        frequency:
+          type: integer
+          format: int64
+          example: 6
+  responses:
+    '201':
+      description: Posted
+      content:
+        text/plain:
+          schema:
+            title: Posted
+            type: string
+    '200':
+      description: Successful response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LocationsFrequency'
+    '204':
+      description: No content
+      content:
+        text/plain:
+          schema:
+            title: No content
+            type: string
+    '404':
+      description: Not found response
+      content:
+        text/plain:
+          schema:
+            title: Endpoint not found
+            type: string
+            example: Not found
