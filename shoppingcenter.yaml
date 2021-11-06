@@ -1,0 +1,95 @@
+openapi: 3.0.2
+info:
+  title: Shoppin Center
+  description: >-
+     This API provides us with different information about the users to use in the shopping centre to provide a better experience in the visit
+  version: '1.0'
+  termsOfService: 'http://spilab.es/'
+  contact:
+    name: Spilab
+    url: 'http://spilab.es/'
+    email: spilab.uex@gmail.com
+tags:
+  - name: User
+paths:
+  /temperature:
+    get:
+      summary: Gets the environment temperature
+      operationId: getTemperature
+      tags:
+      - User
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Temperature'
+          description: Successful response
+        404:
+          $ref: '#/components/responses/404'
+  /location:
+    get:
+      summary: Gets the current location
+      operationId: getLocation
+      tags:
+      - User
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+          description: Successful response
+        404:
+          $ref: '#/components/responses/404'
+  /music:
+    get:
+      summary: Gets a list of favourite music genres
+      operationId: getMusic
+      tags:
+      - User
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MusicArray'
+                
+          description: Successful response
+          
+        404:
+          $ref: '#/components/responses/404'
+    
+components:
+  schemas:
+    Temperature:
+        properties:
+         temperature:
+            example: "34.5"
+            type: string
+    Location:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+          example: 38.48492
+        longitude:
+          type: number
+          format: double
+          example: -6.58794
+    MusicArray:
+      properties:
+       music:
+          type: array
+          items:
+            type: string
+  responses:
+    '404':
+      description: Not found response
+      content:
+        text/plain:
+          schema:
+            title: Endpoint not found
+            type: string
+            example: Not found
