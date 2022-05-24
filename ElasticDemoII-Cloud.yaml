@@ -15,23 +15,58 @@ tags:
 - name: Map
 paths:
   /request:
-    post:
-      operationId: postRequest
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Request'
-        description: Information about the event
-        required: true
+    get:
+      operationId: getHeatmap
+      parameters:
+        - name: beginDate
+          in: query
+          required: true
+          schema:
+            format: date-time
+            type: string
+        - name: endDate
+          in: query
+          required: true
+          schema:
+            format: date-time
+            type: string
+        - name: latitude
+          in: query
+          required: true
+          schema:
+            format: double
+            type: number
+        - name: longitude
+          in: query
+          required: true
+          schema:
+            format: double
+            type: number
+        - name: radius
+          in: query
+          required: true
+          schema:
+            format: double
+            type: number
+        - name: freshness
+          in: query
+          required: true
+          schema:
+            example: LOW
+            type: string
+        - name: accuracy
+          in: query
+          required: true
+          schema:
+            example: HIGH
+            type: string
       responses:
-        201:
+        200:
           content:
-            text/plain:
+            application/json:
               schema:
-                title: Posted
-                type: string
-          description: Posted
+                $ref: '#/components/schemas/LocationsFrequency'
+          description: Successful response
         204:
           content:
             text/plain:
